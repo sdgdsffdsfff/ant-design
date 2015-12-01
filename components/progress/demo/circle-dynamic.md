@@ -7,32 +7,45 @@
 ---
 
 ````jsx
-var ProgressCircle = antd.Progress.Circle;
+import { Progress, Button, Icon } from 'antd';
+const ProgressCircle = Progress.Circle;
+const ButtonGroup = Button.Group;
 
-var MyProgress = React.createClass({
+const MyProgress = React.createClass({
   getInitialState() {
     return {
       percent: 0
     };
   },
-  componentDidMount: function() {
-    var self = this;
-    setInterval(function() {
-      if (self.state.percent < 100) {
-        self.state.percent += 4;
-      }
-      self.setState({
-        percent: self.state.percent
-      });
-    }, 200);
+  increase() {
+    let percent = this.state.percent + 10;
+    if (percent > 100) {
+      percent = 100;
+    }
+    this.setState({ percent });
+  },
+  decline() {
+    let percent = this.state.percent - 10;
+    if (percent < 0) {
+      percent = 0;
+    }
+    this.setState({ percent });
   },
   render() {
-    return <ProgressCircle percent={this.state.percent} />;
+    return <div>
+      <ProgressCircle percent={this.state.percent} />
+      <ButtonGroup>
+        <Button type="ghost" onClick={this.decline}>
+          <Icon type="minus" />
+        </Button>
+        <Button type="ghost" onClick={this.increase}>
+          <Icon type="plus" />
+        </Button>
+      </ButtonGroup>
+    </div>;
   }
 });
 
-React.render(
-  <MyProgress />
-  , document.getElementById('components-progress-demo-circle-dynamic'));
+ReactDOM.render(<MyProgress />, document.getElementById('components-progress-demo-circle-dynamic'));
 ````
 

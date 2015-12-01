@@ -7,8 +7,9 @@
 ---
 
 ````jsx
-var Table = antd.Table;
-var columns = [{
+import { Table } from 'antd';
+
+const columns = [{
   title: '姓名',
   dataIndex: 'name'
 }, {
@@ -19,20 +20,23 @@ var columns = [{
   dataIndex: 'address'
 }];
 
-var data = [{
+const data = [{
+  key: '1',
   name: '胡彦斌',
   age: 32,
   address: '西湖区湖底公园1号'
 }, {
+  key: '2',
   name: '胡彦祖',
   age: 42,
   address: '西湖区湖底公园1号'
 }, {
+  key: '3',
   name: '李大嘴',
   age: 32,
   address: '西湖区湖底公园1号'
 }];
 
-React.render(<Table columns={columns} dataSource={data} pagination={false} />
+ReactDOM.render(<Table columns={columns} dataSource={data} pagination={false} />
 , document.getElementById('components-table-demo-nopagination'));
 ````

@@ -7,13 +7,9 @@
 ---
 
 ````jsx
-var Pagination = antd.Pagination;
+import { Pagination } from 'antd';
 
-function onChange(page) {
-  console.log(page);
-}
-
-React.render(
-  <Pagination onChange={onChange} total={50} />,
+ReactDOM.render(
+  <Pagination defaultCurrent={1} total={50} />,
  document.getElementById('components-pagination-demo-basic'));
 ````

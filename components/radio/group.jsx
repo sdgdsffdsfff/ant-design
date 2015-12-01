@@ -1,9 +1,9 @@
 import React from 'react';
-import Radio from './index';
+import Radio from './radio';
 
 function getCheckedValue(children) {
-  var checkedValue = null;
-  children.forEach(function (radio) {
+  let checkedValue = null;
+  React.Children.forEach(children, function (radio) {
     if (radio.props && radio.props.checked) {
       checkedValue = radio.props.value;
     }
@@ -15,12 +15,13 @@ export default React.createClass({
   getDefaultProps: function () {
     return {
       prefixCls: 'ant-radio-group',
+      disabled: false,
       onChange: function () {
       }
     };
   },
   getInitialState: function () {
-    var props = this.props;
+    let props = this.props;
     return {
       value: props.value || props.defaultValue || getCheckedValue(props.children)
     };
@@ -33,14 +34,15 @@ export default React.createClass({
     }
   },
   render: function () {
-    var props = this.props;
-    var children = props.children.map((radio) => {
+    let props = this.props;
+    let children = React.Children.map(props.children, (radio) => {
       if (radio.props) {
         return <Radio
           key={radio.props.value}
           {...radio.props}
           onChange={this.onRadioChange}
           checked={this.state.value === radio.props.value}
+          disabled={radio.props.disabled || this.props.disabled}
         />;
       }
       return radio;

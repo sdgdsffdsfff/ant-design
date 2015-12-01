@@ -7,24 +7,24 @@
 ---
 
 ````jsx
-var confirm = antd.confirm;
+import { Modal, Button } from 'antd';
+const confirm = Modal.confirm;
 
 function showConfirm(){
   confirm({
     title: '您是否确认要删除这项内容',
-    content: '一些解释',
+    content: '点确认 1 秒后关闭',
     onOk: function() {
-      alert('1 秒后关闭');
-      return new Promise(function(resolve){
-        setTimeout(resolve,1000);
+      return new Promise(function(resolve) {
+        setTimeout(resolve, 1000);
       });
     },
     onCancel: function() {}
   });
 }
 
-React.render(
-<button className="ant-btn" onClick={showConfirm}>
+ReactDOM.render(
+<Button onClick={showConfirm}>
   确认对话框
-</button>, document.getElementById('components-modal-demo-confirm-promise'));
+</Button>, document.getElementById('components-modal-demo-confirm-promise'));
 ````

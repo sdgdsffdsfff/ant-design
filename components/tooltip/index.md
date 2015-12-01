@@ -2,7 +2,7 @@
 
 - category: Components
 - chinese: 文字提示
-- order: 16
+- type: 展示
 
 ---
 
@@ -18,5 +18,5 @@
 
 | 参数      | 说明                                     | 类型       | 默认值 |
 |-----------|------------------------------------------|------------|--------|
-| placement | 气泡框位置，可选 `top/left/right/bottom` | string     | top    |
+| placement | 气泡框位置，可选 `top/left/right/bottom/topLeft/topRight/bottomLeft/bottomRight/leftTop/leftBottom/rightTop/rightBottom` | string     | top    |
 | title     | 提示文字                                 | string/jsx | 无     |

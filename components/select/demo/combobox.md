@@ -8,22 +8,22 @@
 
 
 ````jsx
-var Select = antd.Select;
-var Option = Select.Option;
+import { Select } from 'antd';
+const Option = Select.Option;
 
-var Test = React.createClass({
+const Test = React.createClass({
   getInitialState() {
     return {
       options: []
     };
   },
   handleChange(value) {
-    var options;
+    let options;
     if (!value || value.indexOf('@') >= 0) {
       options = [];
     } else {
       options = ['gmail.com', '163.com', 'qq.com'].map(function(domain) {
-        var email = value + '@' + domain;
+        const email = value + '@' + domain;
         return <Option key={email}>{email}</Option>;
       });
     }
@@ -32,15 +32,17 @@ var Test = React.createClass({
     });
   },
   render() {
+    // filterOption 需要设置为 false，数据是动态设置的
     return <Select combobox
       style={{width:200}}
       onChange={this.handleChange}
+      filterOption={false}
       searchPlaceholder="请输入账户名">
       {this.state.options}
     </Select>;
   }
 });
 
-React.render(<Test />, document.getElementById('components-select-demo-combobox'));
+ReactDOM.render(<Test />, document.getElementById('components-select-demo-combobox'));
 ````
 

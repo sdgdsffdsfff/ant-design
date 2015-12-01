@@ -2,16 +2,16 @@
 
 - order: 1
 
-迷你版的步骤条，通过设置`<Steps size='small'>`启用.
+迷你版的步骤条，通过设置 `<Steps size="small">` 启用.
 
 ---
 
 ````jsx
-var Steps = antd.Steps;
-var Step = Steps.Step;
-var container = document.getElementById('components-steps-demo-small-size');
+import { Steps } from 'antd';
+const Step = Steps.Step;
+const container = document.getElementById('components-steps-demo-small-size');
 
-var steps = [{
+const steps = [{
   status: 'finish',
   title: '已完成'
 }, {
@@ -24,12 +24,10 @@ var steps = [{
   status: 'wait',
   title: '待运行'
 }].map(function(s, i) {
-  return (<Step
-    key={i}
-    status={s.status}
-    title={s.title}>
-  </Step>);
+  return (
+    <Step key={i} title={s.title} description={s.description} />
+  );
 });
 
-React.render(<Steps size="small">{steps}</Steps>, container);
+ReactDOM.render(<Steps size="small" current={1}>{steps}</Steps>, container);
 ````

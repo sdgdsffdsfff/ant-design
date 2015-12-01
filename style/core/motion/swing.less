@@ -1,18 +1,21 @@
 .swing-motion(@className, @keyframeName) {
-  .@{className}-enter {
+  .@{className}-enter,
+  .@{className}-appear {
     .motion-common();
     animation-play-state: paused;
   }
-  .@{className}-enter.@{className}-enter-active {
+  .@{className}-enter.@{className}-enter-active,
+  .@{className}-appear.@{className}-appear-active {
     animation-name: ~"@{keyframeName}In";
     animation-play-state: running;
   }
 }
 
-.swing-motion(swing, swing);
+.swing-motion(swing, antSwing);
 
-@keyframes swingIn {
-  0%, 100% {
+@keyframes antSwingIn {
+  0%,
+  100% {
     transform: translateX(0px);
   }
   20% {

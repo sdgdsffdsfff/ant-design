@@ -1,24 +1,25 @@
 .slide-motion(@className, @keyframeName) {
   .make-motion(@className, @keyframeName);
-  .@{className}-enter {
+  .@{className}-enter,
+  .@{className}-appear {
     opacity: 0;
-    animation-timing-function: @ease-out-circ;
+    animation-timing-function: @ease-out-quint;
   }
   .@{className}-leave {
-    animation-timing-function: @ease-in-circ;
+    animation-timing-function: @ease-in-quint;
   }
 }
 
-.slide-motion(slide-up, slideUp);
-.slide-motion(slide-down, slideDown);
-.slide-motion(slide-left, slideLeft);
-.slide-motion(slide-right, slideRight);
+.slide-motion(slide-up, antSlideUp);
+.slide-motion(slide-down, antSlideDown);
+.slide-motion(slide-left, antSlideLeft);
+.slide-motion(slide-right, antSlideRight);
 
-@keyframes slideUpIn {
+@keyframes antSlideUpIn {
   0% {
     opacity: 0;
     transform-origin: 0% 0%;
-    transform: scaleY(0);
+    transform: scaleY(.8);
   }
   100% {
     opacity: 1;
@@ -27,7 +28,7 @@
   }
 }
 
-@keyframes slideUpOut {
+@keyframes antSlideUpOut {
   0% {
     opacity: 1;
     transform-origin: 0% 0%;
@@ -36,41 +37,41 @@
   100% {
     opacity: 0;
     transform-origin: 0% 0%;
-    transform: scaleY(0);
+    transform: scaleY(.8);
   }
 }
 
-@keyframes slideDownIn {
+@keyframes antSlideDownIn {
   0% {
     opacity: 0;
     transform-origin: 100% 100%;
-    transform: scaleY(0);
+    transform: scaleY(.8);
   }
   100% {
-    opacity: 1;
-    transform-origin: 100% 100%;
-    transform: scaleY(1);
-  }
-}
-
-@keyframes slideDownOut {
-  0% {
     opacity: 1;
     transform-origin: 100% 100%;
     transform: scaleY(1);
   }
+}
+
+@keyframes antSlideDownOut {
+  0% {
+    opacity: 1;
+    transform-origin: 100% 100%;
+    transform: scaleY(1);
+  }
   100% {
     opacity: 0;
     transform-origin: 100% 100%;
-    transform: scaleY(0);
+    transform: scaleY(.8);
   }
 }
 
-@keyframes slideLeftIn {
+@keyframes antSlideLeftIn {
   0% {
     opacity: 0;
     transform-origin: 0% 0%;
-    transform: scaleX(0);
+    transform: scaleX(.8);
   }
   100% {
     opacity: 1;
@@ -79,7 +80,7 @@
   }
 }
 
-@keyframes slideLeftOut {
+@keyframes antSlideLeftOut {
   0% {
     opacity: 1;
     transform-origin: 0% 0%;
@@ -88,15 +89,15 @@
   100% {
     opacity: 0;
     transform-origin: 0% 0%;
-    transform: scaleX(0);
+    transform: scaleX(.8);
   }
 }
 
-@keyframes slideRightIn {
+@keyframes antSlideRightIn {
   0% {
     opacity: 0;
     transform-origin: 100% 0%;
-    transform: scaleX(0);
+    transform: scaleX(.8);
   }
   100% {
     opacity: 1;
@@ -105,7 +106,7 @@
   }
 }
 
-@keyframes slideRightOut {
+@keyframes antSlideRightOut {
   0% {
     opacity: 1;
     transform-origin: 100% 0%;
@@ -114,6 +115,6 @@
   100% {
     opacity: 0;
     transform-origin: 100% 0%;
-    transform: scaleX(0);
+    transform: scaleX(.8);
   }
 }

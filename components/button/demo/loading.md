@@ -1,17 +1,50 @@
 # 加载中
 
-- order: 7
+- order: 4
 
-点击后进入加载状态。
+添加 `loading` 属性即可让按钮处于加载状态，最后一个按钮演示点击后进入加载状态。
 
 ---
 
-````html
-<button class="ant-btn ant-btn-primary ant-btn-circle">
-  <span class="anticon anticon-loading"></span>
-</button>
-<button class="ant-btn ant-btn-primary">
-  <span>加载按钮</span>
-  <span class="anticon anticon-loading"></span>
-</button>
+````jsx
+import { Button } from 'antd';
+
+const App = React.createClass({
+  getInitialState() {
+    return {
+      loading: false
+    };
+  },
+  enterLoading() {
+    this.setState({
+      loading: true
+    });
+  },
+  render() {
+    return <div>
+      <Button type="primary" size="large" loading>
+        加载中
+      </Button>
+      <Button type="primary" loading>
+        加载中
+      </Button>
+      <Button type="primary" size="small" loading>
+        加载中
+      </Button>
+      <br />
+      <Button type="primary" loading={this.state.loading} onClick={this.enterLoading}>
+        点击变加载
+      </Button>
+    </div>;
+  }
+});
+
+ReactDOM.render(<App />, document.getElementById('components-button-demo-loading'));
 ````
+
+<style>
+#components-button-demo-loading .ant-btn {
+  margin-right: 8px;
+  margin-bottom: 12px;
+}
+</style>

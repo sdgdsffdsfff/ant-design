@@ -3,9 +3,12 @@ import React from 'react';
 let prefixCls = 'ant-breadcrumb';
 
 let BreadcrumbItem = React.createClass({
+  propTypes: {
+    href: React.PropTypes.string
+  },
   render() {
-    var link = <a className={prefixCls + '-link'} {...this.props}>{this.props.children}</a>;
-    var slash = <span className={prefixCls + '-slash'}>/</span>;
+    let link = <a className={prefixCls + '-link'} {...this.props}>{this.props.children}</a>;
+    let slash = <span className={prefixCls + '-slash'}>/</span>;
     if (typeof this.props.href === 'undefined') {
       link = <span className={prefixCls + '-link'} {...this.props}>{this.props.children}</span>;
     }
@@ -14,24 +17,31 @@ let BreadcrumbItem = React.createClass({
 });
 
 let Breadcrumb = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func
+  propTypes: {
+    router: React.PropTypes.object,
+    routes: React.PropTypes.array,
+    params: React.PropTypes.object
   },
   render() {
-    var crumbs, routes, params;
-    if (this.context.router && this.props.Router) {
-      var Link = this.props.Router.Link;
-      routes = this.context.router.getCurrentRoutes();
-      params = this.context.router.getCurrentParams();
+    let crumbs;
+    let ReactRouter = this.props.router;
+    let routes = this.props.routes;
+    let params = this.props.params;
+    if (routes && routes.length > 0 && ReactRouter) {
+      let Link = ReactRouter.Link;
       crumbs = routes.map(function(route, i) {
-        var name = route.name.replace(/\:(.*)/g, function(replacement, key) {
+        if (!route.breadcrumbName) {
+          return null;
+        }
+        let name = route.breadcrumbName.replace(/\:(.*)/g, function(replacement, key) {
           return params[key] || replacement;
         });
-        var link;
+        let link;
+        let path = route.path.indexOf('/') === 0 ? route.path : ('/' + route.path);
         if (i === routes.length - 1) {
           link = <span>{name}</span>;
         } else {
-          link = <Link to={route.path} params={params}>{name}</Link>;
+          link = <Link to={path} params={params}>{name}</Link>;
         }
         return <BreadcrumbItem key={name}>{link}</BreadcrumbItem>;
       });

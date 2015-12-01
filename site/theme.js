@@ -52,24 +52,76 @@ module.exports = function(nico) {
     },
     get_categories: function(posts, post) {
       var rootDirectory = post.directory.split('/')[0];
-      var categories = Categories[rootDirectory] || _.uniq(getAllPosts(posts).map(function(item) {
-        if (item.directory.split('/')[0] === post.directory.split('/')[0]) {
-          return item.meta.category;
-        }
-      })).filter(function(n){ return n != undefined });
-      categories = categories.sort(function(a, b) {
-        return a.length - b.length;
-      })
-      Categories[rootDirectory] = categories;
+      if (!rootDirectory && post.filename.indexOf('CHANGELOG') < 0) {
+        return;
+      }
+      var directories = [rootDirectory];
+      // docs 和 components 放在同一页
+      if (rootDirectory === 'docs' || rootDirectory === 'components' ||
+          post.filename.indexOf('CHANGELOG') >= 0) {
+        directories = ['docs', 'components'];
+      }
+      var cacheKey = directories.join('-');
+      var categories;
+      if (Categories[cacheKey]) {
+        categories = Categories[cacheKey];
+      } else {
+        categories = {};
+        _.uniq(getAllPosts(posts).forEach(function(item) {
+          var itemDirectory = item.directory.split('/')[0];
+          var cat = item.meta.category;
+          if (!cat) {
+            return;
+          }
+          if (directories.indexOf(itemDirectory) >= 0 ||
+              item.filename.indexOf('CHANGELOG') >= 0) {
+            item.filename = item.filename.toLowerCase();
+            categories[cat] = categories[cat] || [];
+            categories[cat].push(item);
+          }
+        }));
+        categories = Object.keys(categories).map(function(cat) {
+          return {
+            name: cat,
+            pages: categories[cat]
+          };
+        });
+        // React 的分类排序
+        categories = categories.sort(function(a, b) {
+          var cats = ['React', 'Components'];
+          a = cats.indexOf(a.name);
+          b = cats.indexOf(b.name);
+          return a - b;
+        });
+        // 设计的分类排序
+        categories = categories.sort(function(a, b) {
+          var cats = ['风格', '动画', '模式', '资源'];
+          a = cats.indexOf(a.name);
+          b = cats.indexOf(b.name);
+          return a - b;
+        });
+      }
+      Categories[cacheKey] = categories;
       return categories;
     },
     find_demo_in_component: function(pages, directory) {
       var ret = [];
       getAllPosts(pages).forEach(function(post) {
-        if (post.filepath.indexOf(directory + '/demo/') === 0) {
+        if (post.filepath.indexOf(directory + '/demo/') === 0 && !post.meta.hidden) {
           ret.push(post);
         }
       });
+      var hasOnly;
+      ret.forEach(function(post) {
+        if (post.meta.only) {
+          hasOnly = true;
+        }
+      });
+      if (hasOnly) {
+        ret = ret.filter(function(post) {
+          return post.meta.only;
+        });
+      }
       ret = ret.sort(function(a, b) {
         if (/index$/i.test(a.filename)) {
           a.meta.order = 1;
@@ -100,8 +152,44 @@ module.exports = function(nico) {
         return (i+1)%2 === 0;
       });
     },
-    rootDirectoryIs: function(directory, rootDirectory) {
-      return directory.split('/')[0] === rootDirectory;
+    rootDirectoryIn: function(directory, rootDirectories) {
+      return rootDirectories.indexOf(directory.split('/')[0]) >= 0;
+    },
+    removeCodeBoxIdPrefix: function(id) {
+      return id.split('-').slice(2).join('-');
+    },
+    splitComponentsByType: function(pages, category) {
+      if (category !== 'Components') {
+        return pages.sort(function(a, b) {
+          a = a.meta.order || 100;
+          b = b.meta.order || 100;
+          return parseInt(a, 10) - parseInt(b, 10);
+        });
+      }
+      // 加入组件的类别分隔符
+      var tempResult = _.sortBy(pages, function(p) {
+        var types = ['基本', '表单', '展示', '导航', '其他'];
+        return types.indexOf(p.meta.type || '其他');
+      });
+      var lastType, result = [];
+      tempResult.forEach(function(p) {
+        if (p.meta.type !== lastType) {
+          result.push({
+            name: p.meta.type || '其他',
+            divider: true
+          });
+          lastType = p.meta.type;
+        }
+        result.push(p);
+      });
+      return result;
+    },
+    add_anchor: function(content) {
+      for (var i = 1; i <= 6; i++) {
+        var reg = new RegExp('(<h' + i + '\\sid="(.*?)">.*?)(<\/h' + i + '>)', 'g');
+        content = content.replace(reg, '$1<a href="#$2" class="anchor">#</a> $3');
+      }
+      return content;
     }
   };
 

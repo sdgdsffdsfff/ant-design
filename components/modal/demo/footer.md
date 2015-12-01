@@ -7,9 +7,9 @@
 ---
 
 ````jsx
-var Modal = antd.Modal;
+import { Modal, Button } from 'antd';
 
-var Test = React.createClass({
+const Test = React.createClass({
   getInitialState: function() {
     return {
       loading: false,
@@ -17,11 +17,13 @@ var Test = React.createClass({
     };
   },
   showModal() {
-    this.setState({ visible: true });
+    this.setState({
+      visible: true
+    });
   },
   handleOk() {
     this.setState({ loading: true });
-    setTimeout(()=> {
+    setTimeout(() => {
       this.setState({ loading: false, visible: false });
     }, 3000);
   },
@@ -30,18 +32,17 @@ var Test = React.createClass({
   },
   render() {
     return <div>
-      <button className="ant-btn ant-btn-primary" onClick={this.showModal}>
+      <Button type="primary" onClick={this.showModal}>
         显示对话框
-      </button>
+      </Button>
       <Modal ref="modal"
        visible={this.state.visible}
        title="对话框标题" onOk={this.handleOk} onCancel={this.handleCancel}
         footer={[
-          <button key="back" className="ant-btn" onClick={this.handleCancel}>返 回</button>,
-          <button key="submit" className="ant-btn ant-btn-primary" onClick={this.handleOk}>
+          <Button key="back" type="ghost" size="large" onClick={this.handleCancel}>返 回</Button>,
+          <Button key="submit" type="primary" size="large" loading={this.state.loading} onClick={this.handleOk}>
             提 交
-            <i className={'anticon anticon-loading'+(this.state.loading?'':'hide')}></i>
-          </button>
+          </Button>
         ]}>
         <p>对话框的内容</p>
         <p>对话框的内容</p>
@@ -53,5 +54,5 @@ var Test = React.createClass({
   }
 });
 
-React.render(<Test/> , document.getElementById('components-modal-demo-footer'));
+ReactDOM.render(<Test/>, document.getElementById('components-modal-demo-footer'));
 ````

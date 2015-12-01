@@ -1,18 +1,19 @@
-# 基本
+# 成功
 
 - order: 0
 
-全局提示 - 操作成功提示。
+操作成功反馈。
 
 ---
 
 ````jsx
-var message = antd.message;
-var success = function() {
+import { message, Button } from 'antd';
+
+const success = function() {
   message.success('这是一条成功的提示');
 };
 
-React.render(<button className="ant-btn ant-btn-primary" onClick={success}>显示成功提示</button>
+ReactDOM.render(<Button type="primary" onClick={success}>显示成功提示</Button>
 , document.getElementById('components-message-demo-success'));
 ````
 

@@ -7,13 +7,11 @@
 ---
 
 ````jsx
-var Modal = antd.Modal;
+import { Modal, Button } from 'antd';
 
-var Test = React.createClass({
-  getInitialState(){
-    return{
-      visible: false
-    }
+const App = React.createClass({
+  getInitialState() {
+    return { visible: false };
   },
   showModal() {
     this.setState({
@@ -27,18 +25,15 @@ var Test = React.createClass({
     });
   },
   handleCancel() {
-    console.log('点击了取消');
     this.setState({
       visible: false
     });
   },
   render() {
     return <div>
-      <button className="ant-btn ant-btn-primary" onClick={this.showModal}>显示对话框</button>
-      <Modal title="第一个 Modal"
-        visible={this.state.visible}
-        onOk={this.handleOk}
-        onCancel={this.handleCancel}>
+      <Button type="primary" onClick={this.showModal}>显示对话框</Button>
+      <Modal title="第一个 Modal" visible={this.state.visible}
+        onOk={this.handleOk} onCancel={this.handleCancel}>
         <p>对话框的内容</p>
         <p>对话框的内容</p>
         <p>对话框的内容</p>
@@ -47,6 +42,5 @@ var Test = React.createClass({
   }
 });
 
-React.render(<Test/> , document.getElementById('components-modal-demo-basic'));
+ReactDOM.render(<App />, document.getElementById('components-modal-demo-basic'));
 ````
-

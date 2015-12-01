@@ -7,13 +7,9 @@ Radio 不可用。
 ---
 
 ````jsx
-var Radio = antd.Radio;
+import { Radio, Button } from 'antd';
 
-function toggleDisabled() {
-  disabled = !disabled;
-}
-
-var App = React.createClass({
+const App = React.createClass({
   getInitialState() {
     return {
       disabled: true
@@ -28,15 +24,15 @@ var App = React.createClass({
     return <div>
       <Radio defaultChecked={false} disabled={this.state.disabled}>不可用</Radio>
       <br />
-      <Radio defaultChecked={true} disabled={this.state.disabled}>不可用</Radio>
+      <Radio defaultChecked disabled={this.state.disabled}>不可用</Radio>
       <div style={{marginTop: 20}}>
-        <button className="ant-btn ant-btn-primary" onClick={this.toggleDisabled}>
+        <Button type="primary" onClick={this.toggleDisabled}>
           Toggle disabled
-        </button>
+        </Button>
       </div>
     </div>;
   }
 });
 
-React.render(<App />, document.getElementById('components-radio-demo-disable'));
+ReactDOM.render(<App />, document.getElementById('components-radio-demo-disable'));
 ````

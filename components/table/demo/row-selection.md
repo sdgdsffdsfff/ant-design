@@ -2,17 +2,18 @@
 
 - order: 1
 
-第一列是联动的选择框。
+第一列是联动的选择框，rowSelection 中配置 `type="radio"` 可设为单选。
 
 ---
 
 ````jsx
-var Table = antd.Table;
-var columns = [{
+import { Table } from 'antd';
+
+const columns = [{
   title: '姓名',
   dataIndex: 'name',
   render: function(text) {
-    return <a href="javascript:;">{text}</a>;
+    return <a href="#">{text}</a>;
   }
 }, {
   title: '年龄',
@@ -21,22 +22,25 @@ var columns = [{
   title: '住址',
   dataIndex: 'address'
 }];
-var data = [{
+const data = [{
+  key: '1',
   name: '胡彦斌',
   age: 32,
   address: '西湖区湖底公园1号'
 }, {
+  key: '2',
   name: '胡彦祖',
   age: 42,
   address: '西湖区湖底公园1号'
 }, {
+  key: '3',
   name: '李大嘴',
   age: 32,
   address: '西湖区湖底公园1号'
 }];
 
 // 通过 rowSelection 对象表明需要行选择
-var rowSelection = {
+const rowSelection = {
   onSelect: function(record, selected, selectedRows) {
     console.log(record, selected, selectedRows);
   },
@@ -45,6 +49,6 @@ var rowSelection = {
   }
 };
 
-React.render(<Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+ReactDOM.render(<Table rowSelection={rowSelection} columns={columns} dataSource={data} />
 , document.getElementById('components-table-demo-row-selection'));
 ````

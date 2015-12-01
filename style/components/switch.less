@@ -1,8 +1,8 @@
-@switchPrefixCls:ant-switch;
+@switch-prefix-cls:ant-switch;
 
 @switch-duration:.3s;
 
-.@{switchPrefixCls}{
+.@{switch-prefix-cls} {
   position: relative;
   display: inline-block;
   box-sizing: border-box;
@@ -15,58 +15,53 @@
   background-color: #ccc;
   cursor: pointer;
   transition: all @switch-duration @ease-in-out-circ;
+  user-select: none;
 
   &-inner {
-    color:#fff;
+    color: #fff;
     font-size: 12px;
     position: absolute;
-    left:24px;
+    left: 24px;
   }
 
-  &:after{
+  &:after {
     position: absolute;
     width: 18px;
     height: 18px;
     left: 2px;
-    top:1px;
+    top: 1px;
     border-radius: 100%;
-    background-color: #ffffff;
+    background-color: #fff;
     content: " ";
     cursor: pointer;
     transition: left @switch-duration @ease-in-out-circ;
   }
 
-  &:hover:after{
-  }
+  &-checked {
+    border: 1px solid @primary-color;
+    background-color: @primary-color;
 
-  &-checked{
-    border: 1px solid @success-color;
-    background-color: @success-color;
-
-    .@{switchPrefixCls}-inner {
-      left:6px;
+    .@{switch-prefix-cls}-inner {
+      left: 6px;
     }
 
-    &:after{
+    &:after {
       left: 22px;
     }
   }
 
-  &-disabled{
+  &-disabled {
     cursor: no-drop;
     background: #f4f4f4;
-    border-color:#f4f4f4;
+    border-color: #f4f4f4;
 
-    &:after{
+    &:after {
       background: #ccc;
       cursor: no-drop;
     }
 
-    &:hover:after{
-    }
-
     &-inner {
-      color:#ccc;
+      color: #ccc;
     }
   }
 }

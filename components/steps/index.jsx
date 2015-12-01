@@ -7,18 +7,28 @@ const AntSteps = React.createClass({
       prefixCls: 'ant-steps',
       iconPrefix: 'ant',
       size: 'default',
-      maxDescriptionWidth: 100
+      maxDescriptionWidth: 100,
+      current: 0
     };
   },
   render() {
-    return (<Steps size={this.props.size}
-                   iconPrefix={this.props.iconPrefix}
-                   maxDescriptionWidth={this.props.maxDescriptionWidth}
-                   prefixCls={this.props.prefixCls}>
-      {this.props.children}
-    </Steps>);
+    let maxDescriptionWidth = this.props.maxDescriptionWidth;
+    if (this.props.direction === 'vertical') {
+      maxDescriptionWidth = 'auto';
+    }
+    return (
+      <Steps size={this.props.size}
+             current={this.props.current}
+             direction={this.props.direction}
+             iconPrefix={this.props.iconPrefix}
+             maxDescriptionWidth={maxDescriptionWidth}
+             prefixCls={this.props.prefixCls}>
+        {this.props.children}
+      </Steps>
+    );
   }
 });
+
 AntSteps.Step = Steps.Step;
 
 export default AntSteps;

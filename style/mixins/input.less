@@ -1,14 +1,12 @@
 // size mixins for input
 .input-lg() {
-  padding: @input-padding-lg;
+  padding: @input-padding-vertical-lg @input-padding-horizontal;
   height: @input-height-lg;
-  font-size: @input-font-size-lg;
 }
 
 .input-sm() {
   padding: @input-padding-vertical-sm @input-padding-horizontal;
   height: @input-height-sm;
-  font-size: @input-font-size-sm;
 }
 
 // input status
@@ -20,7 +18,7 @@
 }
 
 // == when hoverd
-.hover(@color: @input-hover-border-color ) {
+.hover(@color: @input-hover-border-color) {
   border-color: tint(@color, 20%);
 }
 
@@ -42,7 +40,7 @@
   width: 100%;
   height: @input-height-base;
   cursor: text;
-  font-size: @input-font-size;
+  font-size: @font-size-base;
   line-height: @line-height-base;
   color: @input-color;
   background-color: @input-bg;
@@ -50,7 +48,7 @@
   border: 1px solid @input-border-color;
   border-radius: @border-radius-base;
   .placeholder(); // Reset placeholder
-  .transition(~"border .3s @{ease-in-out}, background .3s @{ease-in-out}, box-shadow .3s @{ease-in-out}");
+  .transition(~"border .2s @{ease-in-out}, background .2s @{ease-in-out}, box-shadow .2s @{ease-in-out}");
 
   &:hover {
     .hover();
@@ -154,6 +152,7 @@
   }
 
   // Reset rounded corners
+  > div > .@{inputClass}:first-child,
   > .@{inputClass}:first-child,
   &-addon:first-child {
     border-bottom-right-radius: 0;

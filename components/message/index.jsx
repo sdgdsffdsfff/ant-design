@@ -1,41 +1,73 @@
 import React from 'react';
 import Notification from 'rc-notification';
+import Icon from '../icon';
 
 let defaultDuration = 1.5;
+let top;
+let messageInstance;
+let key = 1;
 
 function getMessageInstance() {
-  return Notification.newInstance({
+  messageInstance = messageInstance || Notification.newInstance({
     prefixCls: 'ant-message',
     transitionName: 'move-up',
-    style: {}  // 覆盖原来的样式
+    style: {
+      top: top
+    }  // 覆盖原来的样式
   });
+  return messageInstance;
 }
 
-function notice(content, duration = defaultDuration, type) {
+function notice(content, duration = defaultDuration, type, onClose) {
   let iconClass = ({
-    'info': 'anticon-info-circle ant-message-info',
-    'success': 'anticon-check-circle ant-message-success',
-    'error': 'anticon-exclamation-circle ant-message-error'
+    'info': 'ant-message-info',
+    'success': 'ant-message-success',
+    'error': 'ant-message-error',
+    'loading': 'ant-message-loading'
   })[type];
-  getMessageInstance().notice({
-    key: 'simpleMessage',
+
+  let iconType = ({
+    'info': 'info-circle',
+    'success': 'check-circle',
+    'error': 'exclamation-circle',
+    'loading': 'loading'
+  })[type];
+
+  let instance = getMessageInstance();
+  instance.notice({
+    key: key,
     duration: duration,
     style: {},
-    content: <div className="ant-message-custom-content">
-      <i className={'anticon ' + iconClass}></i>
+    content: <div className={'ant-message-custom-content ' + iconClass}>
+      <Icon className={iconClass} type={iconType} />
       <span>{content}</span>
-    </div>
+    </div>,
+    onClose: onClose
   });
+  return (function() {
+    let target = key++;
+    return function() {
+      instance.removeNotice(target);
+    };
+  })();
 }
 
 export default {
-  info(content, duration) {
-    notice(content, duration, 'info');
+  info(content, duration, onClose) {
+    return notice(content, duration, 'info', onClose);
   },
-  success(content, duration) {
-    notice(content, duration, 'success');
+  success(content, duration, onClose) {
+    return notice(content, duration, 'success', onClose);
   },
-  error(content, duration) {
-    notice(content, duration, 'error');
+  error(content, duration, onClose) {
+    return notice(content, duration, 'error', onClose);
+  },
+  loading(content, duration, onClose) {
+    return notice(content, duration, 'loading', onClose);
+  },
+  config(options) {
+    if (options.top) {
+      top = options.top;
+    }
   }
 };

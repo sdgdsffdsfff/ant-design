@@ -7,10 +7,9 @@
 ---
 
 ````jsx
-// or require('antd/lib/datepicker');
-var Datepicker = antd.Datepicker;
+import { Datepicker } from 'antd';
 
-React.render(
-  <Datepicker value="" />
+ReactDOM.render(
+  <Datepicker defaultValue="2015-12-12" />
 , document.getElementById('components-datepicker-demo-basic'));
 ````

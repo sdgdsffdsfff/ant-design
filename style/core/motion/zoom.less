@@ -1,136 +1,154 @@
 .zoom-motion(@className, @keyframeName) {
   .make-motion(@className, @keyframeName);
-  .@{className}-enter {
-    transform: scale(0, 0); // need this by yiminghe
+  .@{className}-enter,
+  .@{className}-appear {
+    transform: scale(0); // need this by yiminghe
     animation-timing-function: @ease-out-circ;
   }
   .@{className}-leave {
-    animation-timing-function: @ease-in-circ;
+    animation-timing-function: @ease-in-out-circ;
   }
 }
 
-.zoom-motion(zoom, zoom);
-.zoom-motion(zoom-up, zoomUp);
-.zoom-motion(zoom-down, zoomDown);
-.zoom-motion(zoom-left, zoomLeft);
-.zoom-motion(zoom-right, zoomRight);
+.zoom-motion(zoom, antZoom);
+.zoom-motion(zoom-big, antZoomBig);
+.zoom-motion(zoom-up, antZoomUp);
+.zoom-motion(zoom-down, antZoomDown);
+.zoom-motion(zoom-left, antZoomLeft);
+.zoom-motion(zoom-right, antZoomRight);
 
-@keyframes zoomIn {
+@keyframes antZoomIn {
   0% {
     opacity: 0;
-    transform-origin: 50% 50%;
-    transform: scale(0, 0);
+    transform: scale(0);
   }
   100% {
-    transform-origin: 50% 50%;
-    transform: scale(1, 1);
+    transform: scale(1);
   }
 }
 
-@keyframes zoomOut {
+@keyframes antZoomOut {
   0% {
-    transform-origin: 50% 50%;
-    transform: scale(1, 1);
+    transform: scale(1);
   }
   100% {
     opacity: 0;
-    transform-origin: 50% 50%;
-    transform: scale(0, 0);
+    transform: scale(0);
   }
 }
 
-@keyframes zoomUpIn {
+@keyframes antZoomBigIn {
+  0% {
+    opacity: 0;
+    transform: scale(.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes antZoomBigOut {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(.8);
+  }
+}
+
+@keyframes antZoomUpIn {
   0% {
     opacity: 0;
     transform-origin: 50% 0%;
-    transform: scale(0, 0);
+    transform: scale(.8);
   }
   100% {
     transform-origin: 50% 0%;
-    transform: scale(1, 1);
+    transform: scale(1);
   }
 }
 
-@keyframes zoomUpOut {
+@keyframes antZoomUpOut {
   0% {
     transform-origin: 50% 0%;
-    transform: scale(1, 1);
+    transform: scale(1);
   }
   100% {
     opacity: 0;
     transform-origin: 50% 0%;
-    transform: scale(0, 0);
+    transform: scale(.8);
   }
 }
 
-@keyframes zoomLeftIn {
+@keyframes antZoomLeftIn {
   0% {
     opacity: 0;
     transform-origin: 0% 50%;
-    transform: scale(0, 0);
+    transform: scale(.8);
   }
   100% {
     transform-origin: 0% 50%;
-    transform: scale(1, 1);
+    transform: scale(1);
   }
 }
 
-@keyframes zoomLeftOut {
+@keyframes antZoomLeftOut {
   0% {
     transform-origin: 0% 50%;
-    transform: scale(1, 1);
+    transform: scale(1);
   }
   100% {
     opacity: 0;
     transform-origin: 0% 50%;
-    transform: scale(0, 0);
+    transform: scale(.8);
   }
 }
 
-@keyframes zoomRightIn {
+@keyframes antZoomRightIn {
   0% {
     opacity: 0;
     transform-origin: 100% 50%;
-    transform: scale(0, 0);
+    transform: scale(.8);
   }
   100% {
     transform-origin: 100% 50%;
-    transform: scale(1, 1);
+    transform: scale(1);
   }
 }
 
-@keyframes zoomRightOut {
+@keyframes antZoomRightOut {
   0% {
     transform-origin: 100% 50%;
-    transform: scale(1, 1);
+    transform: scale(1);
   }
   100% {
     opacity: 0;
     transform-origin: 100% 50%;
-    transform: scale(0, 0);
+    transform: scale(.8);
   }
 }
 
-@keyframes zoomDownIn {
+@keyframes antZoomDownIn {
   0% {
     opacity: 0;
     transform-origin: 50% 100%;
-    transform: scale(0, 0);
+    transform: scale(.8);
   }
   100% {
     transform-origin: 50% 100%;
-    transform: scale(1, 1);
+    transform: scale(1);
   }
 }
 
-@keyframes zoomDownOut {
+@keyframes antZoomDownOut {
   0% {
     transform-origin: 50% 100%;
-    transform: scale(1, 1);
+    transform: scale(1);
   }
   100% {
     opacity: 0;
     transform-origin: 50% 100%;
-    transform: scale(0, 0);
+    transform: scale(.8);
   }
 }

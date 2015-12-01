@@ -2,39 +2,35 @@
 
 - order: 3
 
-随机生成3~6个步骤，初始随机进行到其中一个步骤。
+随机生成 3~6 个步骤，初始随机进行到其中一个步骤。
 
 ---
 
 ````css
-form.my-step-form > div {
+#components-steps-demo-step-next > div > div {
   margin-bottom: 30px;
 }
 ````
 
 ````jsx
-var Steps = antd.Steps;
-var Step = Steps.Step;
-var container = document.getElementById('components-steps-demo-step-next');
-var steps = (function generateRandomSteps() {
-  var n = Math.floor(Math.random() * 3) + 3;
-  var arr = [];
-  for (var i = 0; i < n; i++ ) {
-    arr.push({
-      title: '步骤' + (i+1)
-    });
-  }
-  return arr;
-})();
+import { Steps, Button } from 'antd';
+const Step = Steps.Step;
+const container = document.getElementById('components-steps-demo-step-next');
+const array = Array.apply(null, Array(Math.floor(Math.random() * 3) + 3));
+const steps = array.map(function(item, i) {
+  return {
+    title: '步骤' + (i + 1)
+  };
+});
 
-var MyForm = React.createClass({
+const App = React.createClass({
   getInitialState() {
     return {
       currentStep: Math.floor(Math.random() * steps.length)
-    }
+    };
   },
-  nextStep() {
-    var s = this.state.currentStep + 1;
+  next() {
+    let s = this.state.currentStep + 1;
     if (s === steps.length) {
       s = 0;
     }
@@ -43,22 +39,20 @@ var MyForm = React.createClass({
     });
   },
   render() {
-    var cs = this.state.currentStep;
-    return (<form className='my-step-form'>
-      <div>当前正在执行第{cs + 1}步</div>
-      <div className='my-step-container'><Steps>
-        {steps.map(function(s, i) {
-          return <Steps.Step
-            key={i}
-            status={cs === i ? 'process' : (cs > i ? 'finish' : 'wait')}
-            title={s.title}
-            ></Steps.Step>
-        })}
-      </Steps></div>
-      <div><span className='ant-btn' onClick={this.nextStep}>下一步</span></div>
-    </form>)
+    const cs = this.state.currentStep;
+    return (
+      <div>
+        <div>当前正在执行第 {cs + 1} 步</div>
+        <Steps current={cs}>
+          {steps.map((s, i) => <Step key={i} title={s.title} description={s.description} />)}
+        </Steps>
+        <div>
+          <Button onClick={this.next}>下一步</Button>
+        </div>
+      </div>
+    );
   }
 });
 
-React.render(<MyForm></MyForm>, container);
+ReactDOM.render(<App />, container);
 ````
